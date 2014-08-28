@@ -1,0 +1,38 @@
+Name: Jeffrey Tai, Brian Chang
+UCLA ID: 504147859, 304151550
+
+
+-------------------------------------------------------------------------------
+
+Response to Exercise 1:
+No, sys_getpid() will not necessarily have the correct value when returned if run(current) is replaced by schedule() in the INT_SYS_GETPID case. The pid value gets placed into the %eax register, and if another process is called, that respective pid will overwrite what is originally in the %eax register.
+
+Response to Exercise 2:
+changes made in do_fork() and copy_stack() functions in mpos-kern.h
+
+Response to Exercise 3:
+changes made in interrupt() function in mpos-kern.c 
+
+case INT_SYS_EXIT:
+1. changed the %eax register (holds the exit status) of the process in the waiting queue to the exit status of the current process.
+2. changed the state of the process in the waiting queue to be runnable.
+
+case INT_SYS_WAIT:
+1. assigned the process's waiting queue to the current running process
+2. changed the current process's state to be blocked.
+
+Response to Exercise 4:
+changes made to interrupt() function in mpos-kern.c
+
+case INT_SYS_EXIT:
+before calling the schedule() function, we have to set the state of the current process to empty, so that there'll be under 15 used processes at a time.
+Anything else you'd like us to know:
+
+
+
+Extra credit exercises:
+
+Extra-Credit Exercise 6:
+
+changes made in mpos-kern.c, mpos-app.h, and mpos.h
+1) I added the case INT_SYS_NEWTHREAD in the switch statement, and the do_newthread function. In mpos-app.h, I added the sys_newthread function. Also, in mpos.h, I added the line for the system call of #define INT_SYS_NEWTHREAD.
